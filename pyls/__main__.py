@@ -7,14 +7,18 @@ def main():
 
     argument_parser.add_argument("-file", help="json file path", type=str, required=False, default="structure.json")
     argument_parser.add_argument("-A", action="store_true", help="whether to print all contents", required=False)
+    argument_parser.add_argument("-l", action="store_true", help="whether to print vertically with additional info", required=False)
 
     args = argument_parser.parse_args()
 
     options = []
+    if args.l:
+        options.append("l")
     if args.A:
         options.append("A")
     else:
         options.append("ls")
+    
 
 
     data = parser_function(args.file, options)
