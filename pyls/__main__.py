@@ -1,5 +1,6 @@
 from parser.parser import parser_function
 from .formatter import formatter_function
+from .aggregator import options_aggregator
 import argparse
 
 def main():
@@ -13,37 +14,8 @@ def main():
 
     args = argument_parser.parse_args()
 
-    options = []
+    options = options_aggregator(args)
     
-    if args.l:
-        options.append("l")
-        if args.A:
-            options.append("A")
-        else:
-            options.append("ls")
-    if args.t:
-        if args.A:
-            if "A" not in options:
-                options.append("A")
-        else:
-            if "ls" not in options:
-                options.append("ls")
-        options.append("t")
-
-    if args.r:
-        if args.A:
-            if "A" not in options:
-                options.append("A")
-        else:
-            if "ls" not in options:
-                options.append("ls")
-        options.append("r")
-    if len(options) == 0:
-        if args.A:
-            options.append("A")
-        else:
-            options.append("ls")
-
     data = parser_function(args.file, options)
 
     formatter_function(data)

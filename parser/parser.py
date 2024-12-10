@@ -8,7 +8,7 @@ from utils.utils import is_string_list, is_tuple_list
 """
 This function aggregates all the logic
 """
-def parser_function(filepath: str, options: List[str]) -> List:
+def parser_function(filepath: str, options: List[str]) -> Union[List[str], List[Tuple]]:
     data = extract_from_file(filepath)
     # collect all the options
     options_map = {"l": option_l, "t": option_t, "A": option_a, "ls": option_ls, "r": option_r}
