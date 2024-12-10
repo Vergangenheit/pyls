@@ -13,8 +13,7 @@ def main():
     options = []
     if args.A:
         options.append("A")
-    
-    if len(options) == 0:
+    else:
         options.append("ls")
 
 
