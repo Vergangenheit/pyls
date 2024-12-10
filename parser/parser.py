@@ -5,16 +5,21 @@ import os
 from utils.utils import is_string_list, is_tuple_list
 
 
-
+"""
+This function aggregates all the logic
+"""
 def parser_function(filepath: str, options: List[str]) -> List:
     data = extract_from_file(filepath)
     # collect all the options
-    options_map = {"l": option_l, "A": option_a, "ls": option_ls}
+    options_map = {"l": option_l, "A": option_a, "ls": option_ls, "r": option_r}
     for option in options:
         if option in options_map:
             data = options_map[option](data)
 
     return data
+
+def option_r(data: List) -> List:
+    return data[::-1]
 
 def option_l(data: Dict) -> List[Tuple]:
     contents = []
