@@ -1,0 +1,3 @@
+*.json
+parser-env/
+.pytest_cache/
