@@ -9,20 +9,40 @@ def main():
     argument_parser.add_argument("-A", action="store_true", help="whether to print all contents", required=False)
     argument_parser.add_argument("-l", action="store_true", help="whether to print vertically with additional info", required=False)
     argument_parser.add_argument("-r", action="store_true", help="whether to print results in reverse", required=False)
+    argument_parser.add_argument("-t", action="store_true", help="whether to sort results by time modified", required=False)
 
     args = argument_parser.parse_args()
 
     options = []
+    
     if args.l:
         options.append("l")
-    if args.r:
-        options.append("r")
-    if args.A:
-        options.append("A")
-    else:
-        options.append("ls")
-    
+        if args.A:
+            options.append("A")
+        else:
+            options.append("ls")
+    if args.t:
+        if args.A:
+            if "A" not in options:
+                options.append("A")
+        else:
+            if "ls" not in options:
+                options.append("ls")
+        options.append("t")
 
+    if args.r:
+        if args.A:
+            if "A" not in options:
+                options.append("A")
+        else:
+            if "ls" not in options:
+                options.append("ls")
+        options.append("r")
+    if len(options) == 0:
+        if args.A:
+            options.append("A")
+        else:
+            options.append("ls")
 
     data = parser_function(args.file, options)
 
