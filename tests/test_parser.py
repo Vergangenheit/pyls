@@ -25,7 +25,7 @@ def test_empty_json():
         parser_function("tests/empty.json", [])
     os.remove("tests/empty.json")
 
-def test_ls_only():
+def test_ls():
     test_data = {"contents": [{"name": ".hidden"}, {"name": "visible"}]}
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
@@ -35,13 +35,43 @@ def test_ls_only():
 
     os.remove("tests/hidden.json")
 
-def test_a_only():
+def test_A():
     test_data = {"contents": [{"name": ".hidden"}, {"name": "visible"}]}
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["A"])
 
     assert data == [".hidden", "visible"]
+
+    os.remove("tests/hidden.json")
+
+def test_l_A():
+    test_data = {
+        "contents": [
+            {"name": ".hidden", "time_modified": 0, "permissions": "perm1"}, 
+            {"name": "visible", "time_modified": 1, "permissions": "perm2"}
+        ]
+    }
+    with open("tests/hidden.json", "w") as file:
+        json.dump(test_data, file, indent=4)
+    data = parser_function("tests/hidden.json", ["l", "A"])
+
+    assert data == [("perm1", 0, ".hidden"), ("perm2", 1, "visible")]
+
+    os.remove("tests/hidden.json")
+
+def test_l_ls():
+    test_data = {
+        "contents": [
+            {"name": ".hidden", "time_modified": 0, "permissions": "perm1"}, 
+            {"name": "visible", "time_modified": 1, "permissions": "perm2"}
+        ]
+    }
+    with open("tests/hidden.json", "w") as file:
+        json.dump(test_data, file, indent=4)
+    data = parser_function("tests/hidden.json", ["l", "ls"])
+
+    assert data == [("perm2", 1, "visible")]
 
     os.remove("tests/hidden.json")
     
