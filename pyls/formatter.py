@@ -3,6 +3,9 @@ from argparse import Namespace
 from utils.utils import is_string_list, is_tuple_list
 import time
 
+"""
+Function responsible for formatting and printing the output
+"""
 def formatter_function(data: List) -> None:
     if is_string_list(data):
         print(" ".join(data))
@@ -12,6 +15,9 @@ def formatter_function(data: List) -> None:
             formatted = format_tuple(content)
             print(f"{formatted[0]} {formatted[1]:>{max_size_width}} {formatted[2]} {formatted[3]}")
 
+"""
+Formats the tuple data before printing
+"""
 def format_tuple(content: Tuple) -> List:
     data = []
     # first permission as is

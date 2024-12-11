@@ -12,14 +12,17 @@ def main():
     argument_parser.add_argument("-r", action="store_true", help="whether to print results in reverse", required=False)
     argument_parser.add_argument("-t", action="store_true", help="whether to sort results by time modified", required=False)
     argument_parser.add_argument("--filter", choices=["dir", "file"], type=str, help="whether to filter in dir or files", required=False)
+    argument_parser.add_argument('open_option', type=str, nargs='?', help='Open option that accepts any single string \
+                                 as long as it is a path of file within the json file')
 
     args = argument_parser.parse_args()
-
-    options = options_aggregator(args)
     
-    data = parser_function(args.file, options)
-
-    formatter_function(data)
+    options = options_aggregator(args)
+    try:
+        data = parser_function(args.file, options)
+        formatter_function(data)
+    except ValueError as e:
+        print(f"error {e}")
 
 if __name__ == "__main__":
     main()

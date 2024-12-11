@@ -3,6 +3,8 @@ from typing import List
 
 def options_aggregator(args: Namespace) -> List[str]:
     options = []
+    if args.open_option:
+        options.append(f"navigate:{args.open_option}")
     if args.l:
         options.append("l")
         if args.A:
