@@ -18,6 +18,8 @@ Print the filesystem information.
 
 *Usage:*
 
-pyls --help (to print documentation about usage and flags)
+1. Put the json file in the root and reference its path with the -file flags
+
+2. pyls --help (to print documentation about usage and flags)
 
 
