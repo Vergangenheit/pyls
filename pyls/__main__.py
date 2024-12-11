@@ -11,6 +11,7 @@ def main():
     argument_parser.add_argument("-l", action="store_true", help="whether to print vertically with additional info", required=False)
     argument_parser.add_argument("-r", action="store_true", help="whether to print results in reverse", required=False)
     argument_parser.add_argument("-t", action="store_true", help="whether to sort results by time modified", required=False)
+    argument_parser.add_argument("--filter", choices=["dir", "file"], type=str, help="whether to filter results by dir or file", required=False)
 
     args = argument_parser.parse_args()
 

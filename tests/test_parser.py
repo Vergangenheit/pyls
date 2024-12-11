@@ -180,3 +180,57 @@ def test_option_r():
     data = option_r(test_data)
 
     assert data == ["visible2", "visible", ".hidden"]
+
+def test_l_t_r_filter_dir():
+    test_data = {
+        "contents": [
+            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible.go", "time_modified": 2, "permissions": "perm3"}
+        ]
+    }
+    with open("tests/hidden.json", "w") as file:
+        json.dump(test_data, file, indent=4)
+    data = parser_function("tests/hidden.json", ["l", "t", "ls", "r", "dir"])
+
+    assert data == [("perm2", 0, "visible")]
+
+    os.remove("tests/hidden.json")
+
+def test_l_t_r_filter_file():
+    test_data = {
+        "contents": [
+            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible.go", "time_modified": 2, "permissions": "perm3"}
+        ]
+    }
+    with open("tests/hidden.json", "w") as file:
+        json.dump(test_data, file, indent=4)
+
+    data_files = parser_function("tests/hidden.json", ["l", "t", "ls", "r", "file"])
+
+    assert data_files == [("perm3", 2, "visible.go")]
+
+    os.remove("tests/hidden.json")
+
+def test_A_filter_file():
+    test_data = {
+        "contents": [
+            {"name": "visible.go", "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "README.hd", "time_modified": 0, "permissions": "perm2"},
+            {"name": "ast", "time_modified": 2, "permissions": "perm3"},
+            {"name": ".gitignore", "time_modified": 3, "permissions": "perm4"}
+        ]
+    }
+    with open("tests/hidden.json", "w") as file:
+        json.dump(test_data, file, indent=4)
+    data = parser_function("tests/hidden.json", ["A", "file"])
+
+    assert data == ["visible.go", "README.hd", ".gitignore"]
+
+    data_dir = parser_function("tests/hidden.json", ["A", "dir"])
+
+    assert data_dir == ["ast"]
+
+    os.remove("tests/hidden.json")
