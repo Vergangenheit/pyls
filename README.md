@@ -13,7 +13,7 @@ Print the filesystem information.
   source <env-name>/bin/activate # unix systems
   <env-name>\Scripts\activate # Windows
 
-3. Install as a package
+3. Install as a package in editable mode
    pip install -e .
 
 *Usage:*
