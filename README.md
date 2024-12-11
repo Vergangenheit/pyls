@@ -18,6 +18,8 @@ Print the filesystem information.
 
 *Usage:*
 
-python -m pyls --help (to print documentation about usage a flags)
+1. Put the json file in the root and reference its path with the -file flags
+
+2. python -m pyls --help (to print documentation about usage a flags)
 
 
