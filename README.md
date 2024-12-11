@@ -9,7 +9,11 @@ Print the filesystem information.
 1. Create a virtual environment (preferably with python3.12)
   python -m venv <env-name>
 
-2. Install dependencies
+2. Activate it
+  source <env-name>/bin/activate # unix systems
+  <env-name>\Scripts\activate # Windows
+
+3. Install dependencies
    pip install -r requirements.txt
 
 *Usage:*
