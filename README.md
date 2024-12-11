@@ -1,10 +1,10 @@
 **PYLS**
 
-***Purpose:***
+**Purpose:**
 
 Print the filesystem information.
 
-Installation:
+*Installation:*
 
 1. Create a virtual environment
   python -m venv <env-name>
@@ -12,8 +12,8 @@ Installation:
 2. Install dependencies
    pip install -r requirements.txt
 
-Usage:
+*Usage:*
 
-python -m pyls --help
+python -m pyls --help (to print documentation about usage a flags)
 
 
