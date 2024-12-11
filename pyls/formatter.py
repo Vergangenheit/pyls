@@ -26,7 +26,12 @@ def format_tuple(content: Tuple) -> List:
     data.append(content[0])
     if not isinstance(content[1], (int, float)):
         raise ValueError("size should be a number")
-    data.append(str(content[1]))
+    # format size into human readable format 1600 -> 1.6K
+    if content[1] > 1023:
+        size = round(content[1] / 1024, 1)
+        data.append(f"{size:.1f}K")
+    else:
+        data.append(str(content[1]))
     if isinstance(content[2], (int, float)):
         # its a unix timestamp to convert into YY DD HH:MM like "Nov 14 14:57"
         data.append(time.strftime("%b %d %H:%M", time.gmtime(content[2])))
