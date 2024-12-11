@@ -4,7 +4,8 @@ from .aggregator import options_aggregator
 import argparse
 
 def main():
-    argument_parser = argparse.ArgumentParser(description="parsing command line flags")
+    argument_parser = argparse.ArgumentParser(description="cli module that prints the contents of a filesystem directory from a json file",
+                                              usage="python -m pyls [-h] [-file FILE] [-A] [-l] [-r] [-t] [--filter {dir,file}] [open_option]")
 
     argument_parser.add_argument("-file", help="json file path", type=str, required=False, default="structure.json")
     argument_parser.add_argument("-A", action="store_true", help="whether to print all contents", required=False)
