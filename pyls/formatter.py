@@ -7,8 +7,10 @@ def formatter_function(data: List) -> None:
     if is_string_list(data):
         print(" ".join(data))
     elif is_tuple_list(data):
+        max_size_width = max(len(str(entry[1])) for entry in data)
         for content in data:
-            print(" ".join(format_tuple(content)))
+            formatted = format_tuple(content)
+            print(f"{formatted[0]} {formatted[1]:>{max_size_width}} {formatted[2]} {formatted[3]}")
 
 def format_tuple(content: Tuple) -> List:
     data = []
@@ -16,14 +18,17 @@ def format_tuple(content: Tuple) -> List:
     if isinstance(content[0], str) is False:
         raise ValueError("permissions should be a string")
     data.append(content[0])
-    if isinstance(content[1], (int, float)):
+    if not isinstance(content[1], (int, float)):
+        raise ValueError("size should be a number")
+    data.append(str(content[1]))
+    if isinstance(content[2], (int, float)):
         # its a unix timestamp to convert into YY DD HH:MM like "Nov 14 14:57"
-        data.append(time.strftime("%b %d %H:%M", time.gmtime(content[1])))
-    elif isinstance(content[1], str):
+        data.append(time.strftime("%b %d %H:%M", time.gmtime(content[2])))
+    elif isinstance(content[2], str):
         # its already a formatted time
-        data.append(content[1])
-    if isinstance(content[2], str) is False:
+        data.append(content[2])
+    if isinstance(content[3], str) is False:
         raise ValueError("name should be a string")
-    data.append(content[2])
+    data.append(content[3])
 
     return data

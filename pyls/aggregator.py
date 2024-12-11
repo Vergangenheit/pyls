@@ -26,6 +26,16 @@ def options_aggregator(args: Namespace) -> List[str]:
             if "ls" not in options:
                 options.append("ls")
         options.append("r")
+
+    if args.filter:
+        if args.A:
+            if "A" not in options:
+                options.append("A")
+        else:
+            if "ls" not in options:
+                options.append("ls")
+        options.append(args.filter)
+
     if len(options) == 0:
         if args.A:
             options.append("A")

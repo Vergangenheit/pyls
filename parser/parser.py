@@ -2,7 +2,7 @@ from typing import List, Tuple, Dict, Union
 import json
 from argparse import Namespace
 import os
-from utils.utils import is_string_list, is_tuple_list
+from utils.utils import is_string_list, is_tuple_list, is_probable_file
 
 
 """
@@ -11,19 +11,48 @@ This function aggregates all the logic
 def parser_function(filepath: str, options: List[str]) -> Union[List[str], List[Tuple]]:
     data = extract_from_file(filepath)
     # collect all the options
-    options_map = {"l": option_l, "t": option_t, "A": option_a, "ls": option_ls, "r": option_r}
+    options_map = {"l": option_l, "t": option_t, "A": option_a, "ls": option_ls, "r": option_r, 
+                   "dir": option_filter_dir, "file": option_filter_file}
     for option in options:
         if option in options_map:
             data = options_map[option](data)
 
     return data
 
-def option_t(data: List[Tuple]) -> List[Tuple]:
-    # contents = []
-    # for content in data["contents"]:
-    #     contents.append((content["permissions"], content["time_modified"], content["name"]))
+def option_filter_dir(data: Union[List[Tuple], List[str]]) -> Union[List[Tuple], List[str]]:
+    if is_string_list(data):
+        filtered_data = []
+        for content in data:
+            if is_probable_file(content):
+                continue
+            filtered_data.append(content)
+        return filtered_data
+    
+    if is_tuple_list(data):
+        filtered_data = []
+        for content in data:
+            if is_probable_file(content[3]):
+                continue
+            filtered_data.append(content)
+        return filtered_data
+    
+def option_filter_file(data: Union[List[Tuple], List[str]]) -> Union[List[Tuple], List[str]]:
+    if is_string_list(data):
+        filtered_data = []
+        for content in data:
+            if is_probable_file(content):
+                filtered_data.append(content)
+        return filtered_data
+    
+    if is_tuple_list(data):
+        filtered_data = []
+        for content in data:
+            if is_probable_file(content[3]):
+                filtered_data.append(content)
+        return filtered_data
 
-    return sorted(data, key=lambda x: x[1])
+def option_t(data: List[Tuple]) -> List[Tuple]:
+    return sorted(data, key=lambda x: x[2])
 
 def option_r(data: List) -> List:
     return data[::-1]
@@ -31,7 +60,7 @@ def option_r(data: List) -> List:
 def option_l(data: Dict) -> List[Tuple]:
     contents = []
     for content in data["contents"]:
-        contents.append((content["permissions"], content["time_modified"], content["name"]))
+        contents.append((content["permissions"], content["size"], content["time_modified"], content["name"]))
 
     return contents
 
@@ -56,7 +85,7 @@ def option_ls(data: Union[Dict, List[str], List[Tuple]]) -> List:
     elif is_tuple_list(data):
         contents = []
         for content in data:
-            if content[2].startswith("."):
+            if content[3].startswith("."):
                 continue
             contents.append(content)
 
