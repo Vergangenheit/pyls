@@ -8,15 +8,22 @@ from utils.utils import is_string_list, is_tuple_list
 """
 This function aggregates all the logic
 """
-def parser_function(filepath: str, options: List[str]) -> List:
+def parser_function(filepath: str, options: List[str]) -> Union[List[str], List[Tuple]]:
     data = extract_from_file(filepath)
     # collect all the options
-    options_map = {"l": option_l, "A": option_a, "ls": option_ls, "r": option_r}
+    options_map = {"l": option_l, "t": option_t, "A": option_a, "ls": option_ls, "r": option_r}
     for option in options:
         if option in options_map:
             data = options_map[option](data)
 
     return data
+
+def option_t(data: List[Tuple]) -> List[Tuple]:
+    # contents = []
+    # for content in data["contents"]:
+    #     contents.append((content["permissions"], content["time_modified"], content["name"]))
+
+    return sorted(data, key=lambda x: x[1])
 
 def option_r(data: List) -> List:
     return data[::-1]
@@ -89,4 +96,8 @@ def extract_from_file(filepath: str) -> Dict:
         raise ValueError("json data is empty")
     
     return data
+
+if __name__ == "__main__":
+    data = parser_function("./structure.json", ["ls", "r"])
+    print(f'Parsed data: {data}')
             
