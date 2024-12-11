@@ -6,7 +6,7 @@ Print the filesystem information.
 
 *Installation:*
 
-1. Create a virtual environment
+1. Create a virtual environment (preferably with python3.12)
   python -m venv <env-name>
 
 2. Install dependencies
