@@ -48,119 +48,119 @@ def test_A():
 def test_l_A():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 0, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 1, "permissions": "perm2"}
+            {"name": ".hidden", "size": 32,"time_modified": 0, "permissions": "perm1"}, 
+            {"name": "visible", "size": 33, "time_modified": 1, "permissions": "perm2"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "A"])
 
-    assert data == [("perm1", 0, ".hidden"), ("perm2", 1, "visible")]
+    assert data == [("perm1", 32, 0, ".hidden"), ("perm2", 33, 1, "visible")]
 
     os.remove("tests/hidden.json")
 
 def test_l_ls():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 0, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 1, "permissions": "perm2"}
+            {"name": ".hidden", "size": 32, "time_modified": 0, "permissions": "perm1"}, 
+            {"name": "visible", "size": 33, "time_modified": 1, "permissions": "perm2"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "ls"])
 
-    assert data == [("perm2", 1, "visible")]
+    assert data == [("perm2", 33, 1, "visible")]
 
     os.remove("tests/hidden.json")
 
 def test_l_r():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 0, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 1, "permissions": "perm2"},
-            {"name": "visible2", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 0, "permissions": "perm1"}, 
+            {"name": "visible", "size": 30, "time_modified": 1, "permissions": "perm2"},
+            {"name": "visible2", "size": 39, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "ls","r"])
 
-    assert data == [("perm3", 2, "visible2"), ("perm2", 1, "visible")]
+    assert data == [("perm3", 39, 2, "visible2"), ("perm2", 30, 1, "visible")]
 
     os.remove("tests/hidden.json")
 
 def test_l_A_r():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 0, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 1, "permissions": "perm2"},
-            {"name": "visible2", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 0, "permissions": "perm1"}, 
+            {"name": "visible","size": 30,  "time_modified": 1, "permissions": "perm2"},
+            {"name": "visible2", "size": 39, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "A","r"])
 
-    assert data == [("perm3", 2, "visible2"), ("perm2", 1, "visible"), ("perm1", 0, ".hidden")]
+    assert data == [("perm3", 39, 2, "visible2"), ("perm2", 30, 1, "visible"), ("perm1", 32, 0, ".hidden")]
 
     os.remove("tests/hidden.json")
 
 def test_l_A_t():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
-            {"name": "visible2", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "size": 33, "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible2", "size": 38, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "A","t"])
 
-    assert data == [("perm2", 0, "visible"), ("perm1", 1, ".hidden"), ("perm3", 2, "visible2")]
+    assert data == [("perm2", 33, 0, "visible"), ("perm1", 32, 1, ".hidden"), ("perm3",38, 2, "visible2")]
 
     os.remove("tests/hidden.json")  
 
 def test_l_t_r():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
-            {"name": "visible2", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "size": 34, "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible2", "size": 37, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "t", "ls", "r"])
 
-    assert data == [("perm3", 2, "visible2"), ("perm2", 0, "visible")]
+    assert data == [("perm3",37,  2, "visible2"), ("perm2", 34, 0, "visible")]
 
     os.remove("tests/hidden.json")
 
 def test_l_t_A_r():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
-            {"name": "visible2", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "size": 33, "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible2", "size": 30, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "t", "A", "r"])
 
-    assert data == [("perm3", 2, "visible2"), ("perm1", 1, ".hidden"), ("perm2", 0, "visible")]
+    assert data == [("perm3", 30, 2, "visible2"), ("perm1", 32, 1, ".hidden"), ("perm2", 33, 0, "visible")]
 
     os.remove("tests/hidden.json")
 
 def test_r():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
-            {"name": "visible2", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "size": 32, "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible2", "size": 32, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
@@ -184,25 +184,25 @@ def test_option_r():
 def test_l_t_r_filter_dir():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
-            {"name": "visible.go", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 30, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "size": 35, "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible.go", "size": 31, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
         json.dump(test_data, file, indent=4)
     data = parser_function("tests/hidden.json", ["l", "t", "ls", "r", "dir"])
 
-    assert data == [("perm2", 0, "visible")]
+    assert data == [("perm2", 35, 0, "visible")]
 
     os.remove("tests/hidden.json")
 
 def test_l_t_r_filter_file():
     test_data = {
         "contents": [
-            {"name": ".hidden", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "visible", "time_modified": 0, "permissions": "perm2"},
-            {"name": "visible.go", "time_modified": 2, "permissions": "perm3"}
+            {"name": ".hidden", "size": 32, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "visible", "size": 32, "time_modified": 0, "permissions": "perm2"},
+            {"name": "visible.go", "size": 32, "time_modified": 2, "permissions": "perm3"}
         ]
     }
     with open("tests/hidden.json", "w") as file:
@@ -210,17 +210,17 @@ def test_l_t_r_filter_file():
 
     data_files = parser_function("tests/hidden.json", ["l", "t", "ls", "r", "file"])
 
-    assert data_files == [("perm3", 2, "visible.go")]
+    assert data_files == [("perm3", 32, 2, "visible.go")]
 
     os.remove("tests/hidden.json")
 
 def test_A_filter_file():
     test_data = {
         "contents": [
-            {"name": "visible.go", "time_modified": 1, "permissions": "perm1"}, 
-            {"name": "README.hd", "time_modified": 0, "permissions": "perm2"},
-            {"name": "ast", "time_modified": 2, "permissions": "perm3"},
-            {"name": ".gitignore", "time_modified": 3, "permissions": "perm4"}
+            {"name": "visible.go", "size": 30, "time_modified": 1, "permissions": "perm1"}, 
+            {"name": "README.hd", "size": 39, "time_modified": 0, "permissions": "perm2"},
+            {"name": "ast", "size": 32, "time_modified": 2, "permissions": "perm3"},
+            {"name": ".gitignore", "size": 29, "time_modified": 3, "permissions": "perm4"}
         ]
     }
     with open("tests/hidden.json", "w") as file:

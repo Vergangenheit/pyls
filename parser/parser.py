@@ -31,7 +31,7 @@ def option_filter_dir(data: Union[List[Tuple], List[str]]) -> Union[List[Tuple],
     if is_tuple_list(data):
         filtered_data = []
         for content in data:
-            if is_probable_file(content[2]):
+            if is_probable_file(content[3]):
                 continue
             filtered_data.append(content)
         return filtered_data
@@ -47,12 +47,12 @@ def option_filter_file(data: Union[List[Tuple], List[str]]) -> Union[List[Tuple]
     if is_tuple_list(data):
         filtered_data = []
         for content in data:
-            if is_probable_file(content[2]):
+            if is_probable_file(content[3]):
                 filtered_data.append(content)
         return filtered_data
 
 def option_t(data: List[Tuple]) -> List[Tuple]:
-    return sorted(data, key=lambda x: x[1])
+    return sorted(data, key=lambda x: x[2])
 
 def option_r(data: List) -> List:
     return data[::-1]
@@ -60,7 +60,7 @@ def option_r(data: List) -> List:
 def option_l(data: Dict) -> List[Tuple]:
     contents = []
     for content in data["contents"]:
-        contents.append((content["permissions"], content["time_modified"], content["name"]))
+        contents.append((content["permissions"], content["size"], content["time_modified"], content["name"]))
 
     return contents
 
@@ -85,7 +85,7 @@ def option_ls(data: Union[Dict, List[str], List[Tuple]]) -> List:
     elif is_tuple_list(data):
         contents = []
         for content in data:
-            if content[2].startswith("."):
+            if content[3].startswith("."):
                 continue
             contents.append(content)
 
