@@ -16,6 +16,9 @@ Print the filesystem information.
 3. Install as a package in editable mode
    pip install -e .
 
+4. Run tests 
+   pytest
+
 *Usage:*
 
 1. Put the json file in the root and reference its path with the -file flags
