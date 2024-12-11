@@ -1,6 +1,6 @@
 from argparse import Namespace
 from pytest import raises
-from parser.parser import parser_function, option_r
+from parser.parser import parser_function, option_r, navigate_path
 import os
 import json
 
@@ -234,3 +234,152 @@ def test_A_filter_file():
     assert data_dir == ["ast"]
 
     os.remove("tests/hidden.json")
+
+def test_l_navigate_folder():
+    test_data = {
+        "contents": [
+            {"name": "folder", "size": 30, "time_modified": 1, "permissions": "perm1", "contents": [
+                    {"name": "file1", "size": 32, "time_modified": 0, "permissions": "perm1"},
+                    {"name": "file2", "size": 33, "time_modified": 1, "permissions": "perm1"}
+                ]
+            }, 
+            {"name": "README.hd", "size": 39, "time_modified": 0, "permissions": "perm2"},
+            {"name": "ast", "size": 32, "time_modified": 2, "permissions": "perm3", "contents": [
+                    {"name": "file3", "size": 32, "time_modified": 0, "permissions": "perm3"},
+                    {"name": "file4", "size": 33, "time_modified": 1, "permissions": "perm3"}
+                ]
+            },
+            {"name": ".gitignore", "size": 29, "time_modified": 3, "permissions": "perm4"}
+        ]
+    }
+    with open("tests/hidden.json", "w") as file:
+        json.dump(test_data, file, indent=4)
+
+    data = parser_function("tests/hidden.json", ["l", "navigate:ast"])
+
+    assert data == [("perm3", 32, 0, "file3"), ("perm3", 33, 1, "file4")]
+
+    os.remove("tests/hidden.json")
+
+def test_navigate_path():
+    test_data = {
+    "name": "interpreter",
+    "size": 4096,
+    "time_modified": 1699957865,
+    "permissions": "-rw-r--r--",
+    "contents": [
+        {
+            "name": "LICENSE",
+            "size": 1071,
+            "time_modified": 1699941437,
+            "permissions": "drwxr-xr-x"
+        },
+        {
+            "name": "ast",
+            "size": 4096,
+            "time_modified": 1699957739,
+            "permissions": "-rw-r--r--",
+            "contents": [
+                {
+                    "name": "go.mod",
+                    "size": 225,
+                    "time_modified": 1699957780,
+                    "permissions": "-rw-r--r--"
+                },
+                {
+                    "name": "go_test.mod",
+                    "size": 250,
+                    "time_modified": 1699957890,
+                    "permissions": "-rw-r--r--"
+                }
+                        ]
+        }
+                ]
+                }
+    returned = navigate_path("ast", test_data)
+
+    assert returned == [("-rw-r--r--", 225, 1699957780, "go.mod"), ("-rw-r--r--", 250, 1699957890, "go_test.mod")]
+
+    returned = navigate_path("ast/go.mod", test_data)
+
+    assert returned == [("-rw-r--r--", 225, 1699957780, "go.mod")]
+
+def test_navigate_invalid():
+    test_data = {
+    "name": "interpreter",
+    "size": 4096,
+    "time_modified": 1699957865,
+    "permissions": "-rw-r--r--",
+    "contents": [
+        {
+            "name": "LICENSE",
+            "size": 1071,
+            "time_modified": 1699941437,
+            "permissions": "drwxr-xr-x"
+        },
+        {
+            "name": "ast",
+            "size": 4096,
+            "time_modified": 1699957739,
+            "permissions": "-rw-r--r--",
+            "contents": [
+                {
+                    "name": "go.mod",
+                    "size": 225,
+                    "time_modified": 1699957780,
+                    "permissions": "-rw-r--r--"
+                },
+                {
+                    "name": "go_test.mod",
+                    "size": 250,
+                    "time_modified": 1699957890,
+                    "permissions": "-rw-r--r--"
+                }
+                        ]
+        }
+                ]
+                }
+    with raises(ValueError, match="cannot access invalid: No such file or directory"):
+        returned = navigate_path("invalid", test_data)
+
+def test_navigate_root():
+    test_data = {
+    "name": "interpreter",
+    "size": 4096,
+    "time_modified": 1699957865,
+    "permissions": "-rw-r--r--",
+    "contents": [
+        {
+            "name": "LICENSE",
+            "size": 1071,
+            "time_modified": 1699941437,
+            "permissions": "drwxr-xr-x"
+        },
+        {
+            "name": "ast",
+            "size": 4096,
+            "time_modified": 1699957739,
+            "permissions": "-rw-r--r--",
+            "contents": [
+                {
+                    "name": "go.mod",
+                    "size": 225,
+                    "time_modified": 1699957780,
+                    "permissions": "-rw-r--r--"
+                },
+                {
+                    "name": "go_test.mod",
+                    "size": 250,
+                    "time_modified": 1699957890,
+                    "permissions": "-rw-r--r--"
+                }
+                        ]
+        }
+                ]
+                }
+    
+    returned = navigate_path(".", test_data)
+
+    assert returned == test_data
+
+    
