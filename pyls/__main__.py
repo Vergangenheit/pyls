@@ -15,9 +15,8 @@ def main():
     argument_parser.add_argument('open_option', type=str, nargs='?', help='Open option that accepts any single string \
                                  as long as it is a path of file within the json file')
 
-
     args = argument_parser.parse_args()
-
+    
     options = options_aggregator(args)
     try:
         data = parser_function(args.file, options)
