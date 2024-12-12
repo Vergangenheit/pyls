@@ -1,4 +1,3 @@
-from argparse import Namespace
 from pytest import raises
 from pyls.parser import parser_function, option_r, navigate_path
 import os
