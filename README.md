@@ -20,7 +20,7 @@ Print the filesystem information.
 
 3. Install as a package in editable mode
 
-   ```pip install pyls```
+   ```pip install -e .```
 
 4. Run tests
  
