@@ -1,4 +1,4 @@
-from parser.parser import parser_function
+from .parser import parser_function
 from .formatter import formatter_function
 from .aggregator import options_aggregator
 import argparse

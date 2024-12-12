@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyls"
+version = "0.0.1"
+dependencies = [
+  "pytest",
+]
+authors = [
+  {name = "Lorenzo Ostano", email = "lorenzo.ostano@gmail.com"},
+]
+requires-python = ">=3.8"
+description = "cli module that prints the contents of a filesystem directory from a json file"
+readme = "README.md"
+
+[project.scripts]
+pyls = "pyls.pyls:main"

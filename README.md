@@ -1,25 +1,41 @@
-**PYLS**
+# PYLS
 
-**Purpose:**
+## Purpose
 
 Print the filesystem information.
 
-*Installation:*
+### Installation
 
-1. Create a virtual environment (preferably with python3.12)
-  python -m venv <env-name>
+#### As executable package
+
+1. Create a virtual environment (preferably with python>=3.8)
+
+  ```python -m venv env-name```
 
 2. Activate it
-  source <env-name>/bin/activate # unix systems
-  <env-name>\Scripts\activate # Windows
 
-3. Install dependencies
-   pip install -r requirements.txt
+  ```source env-name/bin/activate``` # unix systems
 
-*Usage:*
+  ```env-name\Scripts\activate``` # Windows
+
+3. Install as a package in editable mode
+
+   ```pip install -e .```
+
+4. Run tests
+ 
+   ```pytest```
+
+
+
+##### Usage
 
 1. Put the json file in the root and reference its path with the -file flags
 
-2. python -m pyls --help (to print documentation about usage a flags)
+2. If it's an executable package
+
+
+    ```pyls --help``` (to print documentation about usage and flags)
+
 
 

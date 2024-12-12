@@ -1,9 +1,10 @@
 from argparse import Namespace
 from typing import List
 
-"""
-Function responsible for aggregating the option flags to that they are composable 
-"""
+"""Function responsible for aggregating the option flags to that 
+they are composable"""
+
+
 def options_aggregator(args: Namespace) -> List[str]:
     options = []
     if args.open_option:
