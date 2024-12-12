@@ -408,8 +408,7 @@ def test_navigate_invalid():
             }
                 ]
                 }
-    with raises(ValueError, match="cannot access invalid: \
-                No such file or directory"):
+    with raises(ValueError, match="cannot access invalid: No such file or directory"):
         _ = navigate_path("invalid", test_data)
 
 
