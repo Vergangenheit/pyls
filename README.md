@@ -1,10 +1,12 @@
-**PYLS**
+# PYLS
 
-**Purpose:**
+## Purpose
 
 Print the filesystem information.
 
-*Installation:*
+### Installation
+
+#### As executable package
 
 1. Create a virtual environment (preferably with python>=3.8)
   python -m venv <env-name>
@@ -19,10 +21,16 @@ Print the filesystem information.
 4. Run tests 
    pytest
 
-*Usage:*
+
+
+##### Usage
 
 1. Put the json file in the root and reference its path with the -file flags
 
-2. pyls --help (to print documentation about usage and flags)
+2. If it's an executable package
+
+
+    pyls --help (to print documentation about usage and flags)
+
 
 
