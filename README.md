@@ -35,7 +35,7 @@ Print the filesystem information.
 2. If it's an executable package
 
 
-    pyls --help (to print documentation about usage and flags)
+    ```pyls --help``` (to print documentation about usage and flags)
 
 
 
