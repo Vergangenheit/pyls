@@ -9,16 +9,21 @@ Print the filesystem information.
 #### As executable package
 
 1. Create a virtual environment (preferably with python>=3.8)
-  python -m venv <env-name>
+
+  python -m venv env-name
 
 2. Activate it
-  source <env-name>/bin/activate # unix systems
-  <env-name>\Scripts\activate # Windows
+
+  source env-name/bin/activate # unix systems
+
+  env-name\Scripts\activate # Windows
 
 3. Install as a package in editable mode
+
    pip install -e .
 
-4. Run tests 
+4. Run tests
+ 
    pytest
 
 
